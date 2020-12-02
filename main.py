@@ -8,13 +8,17 @@ from selenium.webdriver.common.by import By
 from Attendance.SignIn import SignIn
 
 
+time = {'hour': 8, 'minute': 50, 'am_pm': 'am'}
+
+
 def run():
-    print('ok')
+    print('running...')
     driver = getDriver()
     signIn = SignIn(driver)
     signIn.signIn()
     continueButton(driver)
     submit(driver)
+    print('form submitted')
     startTimer()
 
 
@@ -44,8 +48,10 @@ def getDriver():
 
 
 def startTimer():
+    print(f"Waiting for {time['hour']}:{time['minute']} {time['am_pm']}...")
+
     x = datetime.today()
-    y = x.replace(day=x.day, hour=14, minute=15, second=0, microsecond=0) + timedelta(days=1)
+    y = x.replace(day=x.day, hour=time['hour'], minute=time['minute'], second=0, microsecond=0) + timedelta(days=1)
     delta_t = y - x
 
     secs = delta_t.total_seconds()
