@@ -40,7 +40,7 @@ def getDriver():
     options = webdriver.ChromeOptions()
     options.add_argument('--no-sandbox')
     options.add_argument("--remote-debugging-port=9222")
-    driver = webdriver.Chrome('chromedriver.exe', chrome_options=options)
+    driver = webdriver.Chrome('ChromeDriver(v.87)/chromedriver.exe', chrome_options=options)
 
     # REPLACE Link WITH YOUR CLASSES FORM
     driver.get('https://docs.google.com/forms/d/e/1FAIpQLSfdwB-iT9t1kx8Yul0Sqgs9IqHADz9DicuL_YVZfPp2d4uPvA/viewform')
