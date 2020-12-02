@@ -2,7 +2,23 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 
-from Credidentials import *
+from Attendance.Credidentials import *
+
+'''
+IMPORTANT - Make a file named "Credidentials.py" in this directory, the file should look EXACTLY like this
+
+def getUsername():
+    return "YOUR STUDENT NUMBER"
+
+
+def getPassword():
+    return "YOUR TDSB PASSWORD"
+
+
+def getEmail():
+    return "YOUR TDSB EMAIL"
+
+'''
 
 
 class SignIn:
