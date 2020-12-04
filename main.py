@@ -5,21 +5,21 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
-from Attendance.SignIn import SignIn
+from attendance.sign_in import SignIn
 
 
-time = {'hour': 8, 'minute': 50, 'am_pm': 'am'}
+TIME = {'hour': 8, 'minute': 50, 'am_pm': 'am'}
 
 
 def run():
     print('running...')
-    driver = getDriver()
-    signIn = SignIn(driver)
-    signIn.signIn()
-    continueButton(driver)
+    driver = get_driver()
+    sign_in = SignIn(driver)
+    sign_in.sign_in()
+    continue_button(driver)
     submit(driver)
     print('form submitted')
-    startTimer()
+    start_timer()
 
 
 def submit(driver):
@@ -29,14 +29,14 @@ def submit(driver):
     submit_button.click()
 
 
-def continueButton(driver):
+def continue_button(driver):
     loaded = EC.presence_of_element_located((By.CLASS_NAME, 'VfPpkd-LgbsSe'))
     WebDriverWait(driver, 100).until(loaded)
     button = driver.find_element_by_class_name("VfPpkd-LgbsSe")
     button.click()
 
 
-def getDriver():
+def get_driver():
     options = webdriver.ChromeOptions()
     options.add_argument('--no-sandbox')
     options.add_argument("--remote-debugging-port=9222")
@@ -47,11 +47,11 @@ def getDriver():
     return driver
 
 
-def startTimer():
-    print(f"Waiting for {time['hour']}:{time['minute']} {time['am_pm']}...")
+def start_timer():
+    print(f"Waiting for {TIME['hour']}:{TIME['minute']} {TIME['am_pm']}...")
 
     x = datetime.today()
-    y = x.replace(day=x.day, hour=time['hour'], minute=time['minute'], second=0, microsecond=0) + timedelta(days=1)
+    y = x.replace(day=x.day, hour=TIME['hour'], minute=TIME['minute'], second=0, microsecond=0) + timedelta(days=1)
     delta_t = y - x
 
     secs = delta_t.total_seconds()
@@ -61,4 +61,4 @@ def startTimer():
 
 
 if __name__ == '__main__':
-    startTimer()
+    start_timer()
