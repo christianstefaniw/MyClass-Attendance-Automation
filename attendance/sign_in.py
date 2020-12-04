@@ -30,21 +30,21 @@ class SignIn:
         self.tdsb_sign_in()
 
     def google_sign_in(self):
-        emailInput = self.driver.find_element_by_id('identifierId')
-        emailInput.send_keys(get_email())
+        email_input = self.driver.find_element_by_id('identifierId')
+        email_input.send_keys(get_email())
 
-        nextButton = self.driver.find_element_by_class_name('VfPpkd-LgbsSe')
-        nextButton.click()
+        next_button = self.driver.find_element_by_class_name('VfPpkd-LgbsSe')
+        next_button.click()
 
     def tdsb_sign_in(self):
         loaded = EC.presence_of_element_located((By.ID, 'UserName'))
         WebDriverWait(self.driver, 100).until(loaded)
 
-        studentNumberInput = self.driver.find_element_by_id('UserName')
-        studentNumberInput.send_keys(get_username())
+        student_number_input = self.driver.find_element_by_id('UserName')
+        student_number_input.send_keys(get_username())
 
-        passwordInput = self.driver.find_element_by_id('Password')
-        passwordInput.send_keys(get_password())
+        password_input = self.driver.find_element_by_id('Password')
+        password_input.send_keys(get_password())
 
-        loginButton = self.driver.find_element_by_id('TdsbLoginControl_Login')
-        loginButton.click()
+        login_button = self.driver.find_element_by_id('TdsbLoginControl_Login')
+        login_button.click()
