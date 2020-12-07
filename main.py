@@ -1,8 +1,10 @@
 from datetime import datetime, timedelta
 from threading import Timer
 from selenium import webdriver
+
 from attendance.submit_form import *
 from attendance.sign_in import *
+from form_link import get_form_link
 
 TIME = {'hour': 8, 'minute': '00', 'am_pm': 'am'}
 
@@ -22,8 +24,8 @@ def get_driver():
     options.add_argument("--remote-debugging-port=9222")
     driver = webdriver.Chrome('ChromeDriver(v.87)/chromedriver.exe', chrome_options=options)
 
-    # REPLACE Link WITH YOUR CLASSES FORM
-    driver.get('https://docs.google.com/forms/d/e/1FAIpQLSfdwB-iT9t1kx8Yul0Sqgs9IqHADz9DicuL_YVZfPp2d4uPvA/viewform')
+    # Create a file called "get_form_link.py" with a method called get_form_link which returns your form link
+    driver.get(get_form_link())
     return driver
 
 
@@ -31,7 +33,7 @@ def start_timer():
     print(f"Waiting for {TIME['hour']}:{TIME['minute']} {TIME['am_pm']}...")
 
     x = datetime.today()
-    y = x.replace(day=x.day-1, hour=TIME['hour'], minute=int(TIME['minute']), second=0, microsecond=0) + timedelta(days=1)
+    y = x.replace(day=x.day, hour=TIME['hour'], minute=int(TIME['minute']), second=0, microsecond=0) + timedelta(days=1)
     delta_t = y - x
 
     secs = delta_t.total_seconds()
