@@ -25,26 +25,39 @@ class SignIn:
     def __init__(self, driver):
         self.driver = driver
 
-    def sign_in(self):
-        self.google_sign_in()
-        self.tdsb_sign_in()
+    async def sign_in(self):
+        await self.google_sign_in()
+        await self.tdsb_sign_in()
+        await self.continue_button()
 
-    def google_sign_in(self):
-        email_input = self.driver.find_element_by_id('identifierId')
-        email_input.send_keys(get_email())
+    async def google_sign_in(self):
+        await self.form('identifierId', get_email())
 
-        next_button = self.driver.find_element_by_class_name('VfPpkd-LgbsSe')
-        next_button.click()
+        await self.click_button('identifierNext')
 
-    def tdsb_sign_in(self):
-        loaded = EC.presence_of_element_located((By.ID, 'UserName'))
+    async def tdsb_sign_in(self):
+        await self.form('UserName', get_username())
+        await self.form('Password', get_password())
+
+        await self.click_button('TdsbLoginControl_Login')
+
+    # click google continue button after sign in, element doesn't have an id
+    async def continue_button(self):
+        loaded = EC.presence_of_element_located((By.CLASS_NAME, 'VfPpkd-LgbsSe'))
+        WebDriverWait(self.driver, 100).until(loaded)
+        button = self.driver.find_element_by_class_name("VfPpkd-LgbsSe")
+        button.click()
+
+    async def click_button(self, button_id):
+        loaded = EC.element_to_be_clickable((By.ID, button_id))
         WebDriverWait(self.driver, 100).until(loaded)
 
-        student_number_input = self.driver.find_element_by_id('UserName')
-        student_number_input.send_keys(get_username())
+        btn = self.driver.find_element_by_id(button_id)
+        btn.click()
 
-        password_input = self.driver.find_element_by_id('Password')
-        password_input.send_keys(get_password())
+    async def form(self, form_id, cred):
+        loaded = EC.presence_of_element_located((By.ID, form_id))
+        WebDriverWait(self.driver, 100).until(loaded)
 
-        login_button = self.driver.find_element_by_id('TdsbLoginControl_Login')
-        login_button.click()
+        student_number_input = self.driver.find_element_by_id(form_id)
+        student_number_input.send_keys(cred)

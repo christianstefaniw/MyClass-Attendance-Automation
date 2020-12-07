@@ -1,39 +1,22 @@
 from datetime import datetime, timedelta
 from threading import Timer
 from selenium import webdriver
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
+import asyncio
 
-from attendance.sign_in import SignIn
+from attendance.submit_form import *
+from attendance.sign_in import *
 
-
-TIME = {'hour': 8, 'minute': 50, 'am_pm': 'am'}
+TIME = {'hour': 8, 'minute': 00, 'am_pm': 'am'}
 
 
-def run():
+async def run():
     print('running...')
     driver = get_driver()
     sign_in = SignIn(driver)
-    sign_in.sign_in()
-    continue_button(driver)
-    submit(driver)
+    await sign_in.sign_in()
+    await submit(driver)
     print('form submitted')
     start_timer()
-
-
-def submit(driver):
-    loaded = EC.presence_of_element_located((By.CLASS_NAME, 'freebirdFormviewerViewNavigationSubmitButton'))
-    WebDriverWait(driver, 100).until(loaded)
-    submit_button = driver.find_element_by_class_name('freebirdFormviewerViewNavigationSubmitButton')
-    submit_button.click()
-
-
-def continue_button(driver):
-    loaded = EC.presence_of_element_located((By.CLASS_NAME, 'VfPpkd-LgbsSe'))
-    WebDriverWait(driver, 100).until(loaded)
-    button = driver.find_element_by_class_name("VfPpkd-LgbsSe")
-    button.click()
 
 
 def get_driver():
@@ -56,8 +39,14 @@ def start_timer():
 
     secs = delta_t.total_seconds()
 
-    t = Timer(secs, run)
+    t = Timer(secs, go_to_run)
     t.start()
+
+
+def go_to_run():
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    loop.run_until_complete(run())
 
 
 if __name__ == '__main__':
