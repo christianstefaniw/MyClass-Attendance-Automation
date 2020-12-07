@@ -25,37 +25,37 @@ class SignIn:
     def __init__(self, driver):
         self.driver = driver
 
-    async def sign_in(self):
-        await self.google_sign_in()
-        await self.tdsb_sign_in()
-        await self.continue_button()
+    def sign_in(self):
+        self.google_sign_in()
+        self.tdsb_sign_in()
+        self.continue_button()
 
-    async def google_sign_in(self):
-        await self.form('identifierId', get_email())
+    def google_sign_in(self):
+        self.form('identifierId', get_email())
 
-        await self.click_button('identifierNext')
+        self.click_button('identifierNext')
 
-    async def tdsb_sign_in(self):
-        await self.form('UserName', get_username())
-        await self.form('Password', get_password())
+    def tdsb_sign_in(self):
+        self.form('UserName', get_username())
+        self.form('Password', get_password())
 
-        await self.click_button('TdsbLoginControl_Login')
+        self.click_button('TdsbLoginControl_Login')
 
     # click google continue button after sign in, element doesn't have an id
-    async def continue_button(self):
+    def continue_button(self):
         loaded = EC.presence_of_element_located((By.CLASS_NAME, 'VfPpkd-LgbsSe'))
         WebDriverWait(self.driver, 100).until(loaded)
         button = self.driver.find_element_by_class_name("VfPpkd-LgbsSe")
-        await button.click()
+        button.click()
 
-    async def click_button(self, button_id):
+    def click_button(self, button_id):
         loaded = EC.element_to_be_clickable((By.ID, button_id))
         WebDriverWait(self.driver, 100).until(loaded)
 
         btn = self.driver.find_element_by_id(button_id)
         btn.click()
 
-    async def form(self, form_id, cred):
+    def form(self, form_id, cred):
         loaded = EC.presence_of_element_located((By.ID, form_id))
         WebDriverWait(self.driver, 100).until(loaded)
 
