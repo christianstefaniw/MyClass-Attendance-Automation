@@ -46,18 +46,18 @@ class SignIn:
         loaded = EC.presence_of_element_located((By.CLASS_NAME, 'VfPpkd-LgbsSe'))
         WebDriverWait(self.driver, 100).until(loaded)
         button = self.driver.find_element_by_class_name("VfPpkd-LgbsSe")
-        button.click()
+        await button.click()
 
     async def click_button(self, button_id):
         loaded = EC.element_to_be_clickable((By.ID, button_id))
         WebDriverWait(self.driver, 100).until(loaded)
 
         btn = self.driver.find_element_by_id(button_id)
-        btn.click()
+        await btn.click()
 
     async def form(self, form_id, cred):
         loaded = EC.presence_of_element_located((By.ID, form_id))
         WebDriverWait(self.driver, 100).until(loaded)
 
         student_number_input = self.driver.find_element_by_id(form_id)
-        student_number_input.send_keys(cred)
+        await student_number_input.send_keys(cred)

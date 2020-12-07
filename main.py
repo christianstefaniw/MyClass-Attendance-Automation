@@ -6,7 +6,7 @@ import asyncio
 from attendance.submit_form import *
 from attendance.sign_in import *
 
-TIME = {'hour': 8, 'minute': 00, 'am_pm': 'am'}
+TIME = {'hour': 8, 'minute': '00', 'am_pm': 'am'}
 
 
 async def run():
@@ -34,7 +34,7 @@ def start_timer():
     print(f"Waiting for {TIME['hour']}:{TIME['minute']} {TIME['am_pm']}...")
 
     x = datetime.today()
-    y = x.replace(day=x.day, hour=TIME['hour'], minute=TIME['minute'], second=0, microsecond=0) + timedelta(days=1)
+    y = x.replace(day=x.day, hour=TIME['hour'], minute=int(TIME['minute']), second=0, microsecond=0) + timedelta(days=1)
     delta_t = y - x
 
     secs = delta_t.total_seconds()
