@@ -7,15 +7,15 @@ from attendance.credentials import get_email, get_username, get_password
 '''
 IMPORTANT - Make a file named "credentials.py" in this directory, the file should look EXACTLY like this
 
-def getUsername():
-    return "YOUR STUDENT NUMBER"
+def get_username():
+    return "YOUR TDSB STUDENT NUMBER"
 
 
-def getPassword():
+def get_password():
     return "YOUR TDSB PASSWORD"
 
 
-def getEmail():
+def get_email():
     return "YOUR TDSB EMAIL"
 
 '''
