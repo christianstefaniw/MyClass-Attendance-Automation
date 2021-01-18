@@ -1,5 +1,4 @@
-/attendance/credentials.py
 /.idea/
 /attendance/__pycache__/
 /__pycache__/
-form_link.py
+.env

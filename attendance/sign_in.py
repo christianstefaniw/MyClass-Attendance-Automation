@@ -1,24 +1,7 @@
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
-
-from attendance.credentials import get_email, get_username, get_password
-
-'''
-IMPORTANT - Make a file named "credentials.py" in this directory, the file should look EXACTLY like this
-
-def get_username():
-    return "YOUR TDSB STUDENT NUMBER"
-
-
-def get_password():
-    return "YOUR TDSB PASSWORD"
-
-
-def get_email():
-    return "YOUR TDSB EMAIL"
-
-'''
+import os
 
 
 class SignIn:
@@ -31,13 +14,13 @@ class SignIn:
         self.continue_button()
 
     def google_sign_in(self):
-        self.form('identifierId', get_email())
+        self.form('identifierId', os.getenv("EMAIL"))
 
         self.click_button('identifierNext')
 
     def tdsb_sign_in(self):
-        self.form('UserName', get_username())
-        self.form('Password', get_password())
+        self.form('UserName', os.getenv("USER"))
+        self.form('Password', os.getenv("PASSWORD"))
 
         self.click_button('TdsbLoginControl_Login')
 

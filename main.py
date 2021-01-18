@@ -4,17 +4,13 @@ from selenium import webdriver
 
 from attendance.submit_form import *
 from attendance.sign_in import *
-from form_link import get_form_link
 
-'''
-Create a file called "form_link.py" in this directory it should contain:
+import os
+from dotenv import load_dotenv
 
-def get_form_link():
-    return 'YOUR GOOGLE FORM LINK'
-'''
+load_dotenv()
 
-
-TIME = {'hour': '8', 'minute': '50', 'am_pm': 'am'}
+TIME = {'hour': '10', 'minute': '57', 'am_pm': 'am'}
 
 
 def run():
@@ -32,7 +28,7 @@ def get_driver():
     options.add_argument("--remote-debugging-port=9222")
     driver = webdriver.Chrome('ChromeDriver(v.87)/chromedriver.exe', chrome_options=options)
 
-    driver.get(get_form_link())
+    driver.get(os.getenv('FORM_LINK'))
     return driver
 
 
@@ -40,7 +36,7 @@ def start_timer():
     print(f"Waiting for {TIME['hour']}:{TIME['minute']} {TIME['am_pm']}...")
 
     x = datetime.today()
-    y = x.replace(day=x.day, hour=int(TIME['hour']), minute=int(TIME['minute']), second=0, microsecond=0) + timedelta(days=1)
+    y = x.replace(day=x.day, hour=int(TIME['hour']), minute=int(TIME['minute']), second=0, microsecond=0)
     delta_t = y - x
 
     secs = delta_t.total_seconds()
